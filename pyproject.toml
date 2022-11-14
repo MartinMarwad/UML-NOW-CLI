@@ -15,7 +15,8 @@ classifiers = [
     "Programming Language :: Python :: 3",
 ]
 dependencies = [
-    "fire",
+    "fire @git+https://github.com/google/python-fire.git",
+    "bs4",
 ]
 requires-python = ">=3"
 
