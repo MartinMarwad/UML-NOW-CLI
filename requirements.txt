@@ -1,4 +1,6 @@
 
-# https://github.com/google/python-fire
-fire
+# Install latest version from git - https://github.com/google/python-fire
+git+https://github.com/google/python-fire
 
+# Beautiful Soup 4
+bs4

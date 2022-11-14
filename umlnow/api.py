@@ -2,31 +2,47 @@
 API
 """
 
-# Python Standard
+# Python Packages
 import requests
-import json
-
-# Python Extended
-import fire
 
 
-# Request API
-def search(**params):
-    """Search """
+# API
+class API(object):
+    """API Class.
+    This object provides the CLI for the api command. This command is used to directly
+    interface with the UML Now API and the UML Catalog API."""
     
-    # Base URL
-    URL = "https://www.uml.edu/student-dashboard/api/ClassSchedule/RealTime/Search/?"
-    
-    # Create Request URL
-    for key, value in params.items():
-        URL += f"{key}={value}&"
+    def __init__(self):
+        """Initialize API Class"""
+        pass
         
-    # Request
-    response = requests.get(URL).json()
+    def search(self, **params):
+        """Search the UML Now API and return raw JSON."""
+        # If no params:
+        if not params:
+            return "No params provided"
+        
+        # Base URL
+        URL = "https://www.uml.edu/student-dashboard/api/ClassSchedule/RealTime/Search/?"
+        
+        # Create Request URL
+        for key, value in params.items():
+            URL += f"{key}={value}&"
+            
+        # Request
+        response = requests.get(URL).json()
+        return response
     
-    return json.dumps(response, indent=4)
-    
-    return response
-
-
+    def catalog(self, **params):
+        """Search the UML Course Catalog API and return raw JSON."""
+        # Base URL
+        URL = "https://www.uml.edu/catalog/advance-search.aspx?"
+        
+        # Create Request URL
+        for key, value in params.items():
+            URL += f"{key}={value}&"
+            
+        # Request
+        response = requests.post(URL).json()
+        return response    
 
