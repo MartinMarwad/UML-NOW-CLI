@@ -1,8 +1,16 @@
 # Data vault
 
-# Course Prefixes 
-PREFIXES = [
+# Departments
+class DEPARTMENT_CODES:
+    ACCOUNTING = "LACCOUNT"
+    AMERICAN_STUDIES = "LAMERSTDY"
+    ART_AND_DESIGN = "LAESTCRSTY|LFINEARTS|LSTUDIOART"
+    ART_HISTORY = "LARTHISTRY"
+    BIOLOGY = "LBIOLOGY"
+    # BIOMEDICAL_AND_NUTRICIAN
 
+# Course Prefixes 
+DEPARTMENT_PREFIXES = [
     "ACCT",
     "AERO",
     "AEST",
@@ -111,5 +119,22 @@ PREFIXES = [
     "WLPO",
     "WLSP",
     "WORC",
-
 ]
+
+# College Suffixes
+class COLLEGE_CODES:
+    COLLEGE_EDUCATION = "EDGR"
+    COLLEGE_ENGINEERING = "EN"
+    COLLEGE_ARTS = "A&S"
+    COLLEGE_HEALTH = "HP"
+    COLLEGE_SCIENCES = "SCI"
+    COLLEGE_BUSINESS = "MG"
+
+COLLEGES = {
+    COLLEGE_CODES.COLLEGE_EDUCATION: "College of Education",
+    COLLEGE_CODES.COLLEGE_ENGINEERING: "Francis College of Engineering",
+    COLLEGE_CODES.COLLEGE_ARTS: "College of Fine Arts, Humanities, and Social Sciences",
+    COLLEGE_CODES.COLLEGE_HEALTH: "Zuckerberg College of Health Sciences",
+    COLLEGE_CODES.COLLEGE_SCIENCES: "Kennedy College of Sciences",
+    COLLEGE_CODES.COLLEGE_BUSINESS: "Manning School of Business",
+}

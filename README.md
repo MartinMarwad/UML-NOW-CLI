@@ -14,14 +14,14 @@ Install with pip:
 $ pip3 install git+https://github.com/MartinMarwad/UML-NOW-CLI
 ```
 
-If you would like to create a shortcut script, copy the `umlnow.sh` file into your user or system bin folder. 
-
+If you would like to create a shortcut script, copy the `umlnow.sh` file into your user or system bin folder.
 
 ## Basic Usage
 
 The following commands can be used to output data:
+
 - Course
-- Search (Not implemented yet)
+- Search (in progress)
 - API
 
 ### Course
@@ -29,6 +29,7 @@ The following commands can be used to output data:
 This command utilizes web-scraping to extract information about a specific course from the UML Course Catalog website without using the API. **Note that this may produce inaccurate results if there is an error parsing the data.**
 
 The `course` command expects a **course prefix** combined with a **course number**. Examples:
+
 - `COMP.1010`
 - `EECE.2020`
 - `MATH.2310`
@@ -60,9 +61,11 @@ $ python3 -m umlnow course COMP.1010
 ```
 
 It also allows getting specific data:
+
 ```
 $ python3 -m umlnow course COMP.1010 --requirements
 ```
+
 ```
 {
     "requirements": {
@@ -77,28 +80,80 @@ $ python3 -m umlnow course COMP.1010 --requirements
 ```
 
 
+
 ### Search
 
-**Currently not implemented yet.**
-
-An abstraction layer that combines features of the UML Now API and the UML Course Catalog API.  
+An abstraction layer that combines features of the UML Now API and the UML Course Catalog API.
 
 Sub commands:
-- classes
+
+- courses
 - professors
-- majors
-- minors
-- degree-pathways/programs
+- programs
+  - majors
+  - minors
+- pathways
+
+
+#### Search: Courses
+
+Provides the ability to query for all courses offered by UML.
+
+
+To see all courses offered by UML:
+
+```bash
+$ python3 -m umlnow search courses
+```
+
+
+To see all courses offered by a department prefix
+
+```bash
+$ python3 -m umlnow search courses --departments=COMP
+```
+
+
+##### Using the `--parse` flag
+
+By default, the search command just scrapes and returns results from the UML Course Catalog search page: https://www.uml.edu/catalog/advance-search.aspx.
+
+The data provided is only the course prefix, name, and id. If you want to get all the details from a course like from the `umlnow course` command, you can do so by including the `--parse` flag.
+
+**However, this requests a new webpage from the UML website for every course found. Using this flag on a large queryset (like all the courses) will take a long time to run and could break the terms of the UML website. Use this flag at your own risk.**
+
+
+#### Search: Professors
+
+***Not Implmented***
+
+Provides the ability to query for all professors teaching courses at UML.
+
+
+#### Search: Programs
+
+***Not Implmented***
+
+Provides the ability to query for all programs offered at UML.
+
+
+#### Search: Pathways
+
+***Not Implmented***
+
+Provides the ability to query for degree-pathways offered by UML.
 
 
 ### API
 
-If you want to access the UML APIs directly, use the following commands. This is useful for testing or exploring what the APIs can provide. 
+***Needs Documentation***
+
+If you want to access the UML APIs directly, use the following commands. This is useful for testing or exploring what the APIs can provide.
 
 
-#### Search
+#### API: Search
 
-Query the UML Now API directly. 
+Query the UML Now API directly.
 
 ```
 $ python3 -m umlnow api search --term=3210 --subjects=COMP
@@ -110,18 +165,21 @@ $ python3 -m umlnow api search --term=3210 --subjects=COMP --courseTitle=computi
 
 
 
-#### Catalog
+#### API: Catalog
 
-Query the UML Catalog API directly. 
+Query the UML Catalog API directly.
 
 ```
 $ python3 -m umlnow api catalog --pathCollege=SCI --pathDepartment=LCOMPSCI --pathType=undergraduate --SearchType=path
 ```
 
 
+
 ## Library
 
-To use within your own Python program as a library, simply import the commands. 
+***Needs Documentation***
+
+To use within your own Python program as a library, simply import the commands.
 
 ```python
 from umlnow import course, Search, API

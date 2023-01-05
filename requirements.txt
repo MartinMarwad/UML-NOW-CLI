@@ -1,10 +1,9 @@
 
-# Install latest version from git - https://github.com/google/python-fire
+# Install latest Fire version from git - https://github.com/google/python-fire
 git+https://github.com/google/python-fire
 
-#@37c4305
-
-# -e git://github.com/google/python-fire.git@37c4305194ff3d0a63f435f08a40e14b1978bd4e#egg=fire
-
-# Beautiful Soup 4
+# Beautiful Soup 4 - HTML/XML parser
 bs4
+
+# Playwright - Browser automation library
+playwright
