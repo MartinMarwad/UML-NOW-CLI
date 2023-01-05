@@ -17,6 +17,7 @@ classifiers = [
 dependencies = [
     "fire @git+https://github.com/google/python-fire.git",
     "bs4",
+    "playwright",
 ]
 requires-python = ">=3"
 
