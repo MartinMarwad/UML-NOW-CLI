@@ -25,7 +25,7 @@ def get_html(url):
     return html
 
 # Return a total list of classes from a department
-def get_courses_by_department_prefix(department, parse=False):
+def get_courses_by_department_prefix(department, parse=False, debug=False):
     """Return a total list of classes from a department."""
     
     # Output
@@ -50,6 +50,9 @@ def get_courses_by_department_prefix(department, parse=False):
         # Get the span elements. Helps identify the position of the data
         spans = element.find_all('span')
         course_prefix = spans[1].text
+        
+        # If the debug flag is set, print the course prefix
+        print(f'    - Starting: {course_prefix}') if debug else None
         
         # Increment the total number of results
         OUTPUT["total"] += 1
@@ -79,6 +82,7 @@ class Search(object):
     
     def __init__(self, **params):
         self.params = params
+        self.debug = True if 'debug' in self.params else False
         
     def courses(self):
         """Return a list of classes that match the search criteria."""    
@@ -104,7 +108,9 @@ class Search(object):
                         
         # For department in departments, get the courses
         for department in departments:
-            OUTPUT[department] = get_courses_by_department_prefix(department, parse=('parse' in self.params and self.params['parse']))
+            if self.debug:
+                print("- Starting search for department: " + department)
+            OUTPUT[department] = get_courses_by_department_prefix(department, parse=('parse' in self.params and self.params['parse']), debug=self.debug)
             OUTPUT['total'] += OUTPUT[department]['total']
             
         # Return the output

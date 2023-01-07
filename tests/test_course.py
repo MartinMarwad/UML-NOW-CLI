@@ -392,6 +392,9 @@ TEST_CASES = [
         }
     },
     
+    # Case 32: BIOL.1220 - Has an anti-requirement
+    # Case 33: CHEM.4750 - Has a requirement that uses "Math", which is a prefix.
+    
 ]
 
 # Test the function against the test cases
