@@ -6,6 +6,7 @@ Courses
 from bs4 import BeautifulSoup
 import requests
 import json
+import functools
 
 # Local
 from .data import DEPARTMENT_PREFIXES
@@ -166,6 +167,25 @@ def get_course_requirements_dict(text: str) -> dict:
     # Return output
     return output
 
+def filter_by_instructor(data, instructor):
+    """Filter an API data response by instructor."""
+    filtered_data = {}
+    for term, term_data in data.items():
+        if term == "Time" or term == "Total":
+            continue
+        filtered_courses = [course for course in term_data["Courses"] if course['Instructor'].lower().split(" ") == instructor]
+        if filtered_courses:
+            filtered_data[term] = {"Total": len(filtered_courses), "Courses": filtered_courses}
+    return filtered_data
+
+def filter_by_semester(data, semester):
+    filtered_data = {}
+    for term, term_data in data.items():
+        if term == "Time" or term == "Total":
+            continue
+        if semester.lower() in term.lower():
+            filtered_data[term] = term_data
+    return filtered_data
 
 # Course Command
 def Course(course, **kwargs):
@@ -177,7 +197,27 @@ def Course(course, **kwargs):
         
     # History
     if kwargs.get("history"):
-        return API.search_history(course)
+        history = API.search_history(course)
+        
+        # If both professor and semester flags passed, filter history for professor and semester
+        if kwargs.get("prof") and kwargs.get("semester"):
+            professor = list(kwargs.get("prof"))
+            semester = kwargs.get("semester")
+            return filter_by_semester(filter_by_instructor(history, professor), semester)
+
+        # If professor flag passed, filter history for professor
+        if kwargs.get("prof"):
+            professor = list(kwargs.get("prof"))
+            return filter_by_instructor(history, professor)
+        
+        # If semester flag passed, filter history for semester
+        if kwargs.get("semester"):
+            semester = kwargs.get("semester")
+            print(semester)
+            return filter_by_semester(history, semester)
+        
+        # Otherwise, return history unfiltered
+        return history
     
     # Create course url lookup from "course"
     course_url = get_course_url(course)

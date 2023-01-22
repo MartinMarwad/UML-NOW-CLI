@@ -95,13 +95,26 @@ $ python3 -m umlnow course COMP.1010 --requirements
 
 The parser will automatically try to extract the requirements string into structured class requirements. Both `prerequisites` and `corequisites` are lists of requirements. Each requirement is a list too. If there are multiple optional requirements, then there will be a list of optional classes in each requirement. Otherwise, there will just be one class in each requirement.
 
-
 #### Course: History
 
 The `--history` flag uses the `api` command under the hood to get a history of when the course was taught. This history goes back to Fall 2015.
 
 ```
 python3 -m umlnow course COMP.5450 --history
+```
+
+To filter results by professor or semester or both, you can use the `--prof` and `--semester` flags.
+
+```
+python3 -m umlnow course COMP.1010 --history --prof david,adams
+```
+
+```
+python3 -m umlnow course COMP.1010 --history --semester fall 
+```
+
+```
+python3 -m umlnow course COMP.1010 --history --semester fall --prof david,adams
 ```
 
 
