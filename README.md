@@ -11,7 +11,7 @@ Currently a work in progress.
 Install with pip:
 
 ```
-$ pip3 install git+https://github.com/MartinMarwad/UML-NOW-CLI
+$ pip3 install -f git+https://github.com/MartinMarwad/UML-NOW-CLI
 ```
 
 If you would like to create a shortcut script, copy the `umlnow.sh` file into your user or system bin folder.
