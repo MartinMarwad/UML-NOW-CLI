@@ -9,6 +9,11 @@ import json
 
 # Local
 from .data import DEPARTMENT_PREFIXES
+from .api import API
+
+
+# Intialize API
+API = API()
 
 
 def get_course_url(course: str):
@@ -18,7 +23,17 @@ def get_course_url(course: str):
 
 def get_html_response(url: str):
     """Get the html response from a url."""
+    
+    # Get the response
     response = requests.get(url)
+    
+    # Check if course page exists
+    soup = BeautifulSoup(response.content, "html.parser")
+    if soup.select("#PrimaryContentPlaceHolder_searchControl_lblNoResult"):
+        if soup.select("#PrimaryContentPlaceHolder_searchControl_lblNoResult")[0].text == "No results found.":
+            return None
+    
+    # Otherwise, return the response
     return response
 
 def get_course_name(response: requests.models.Response):
@@ -119,7 +134,7 @@ def extract_courses_from_str(text: str):
 
     return output
     
-def get_course_requirements_dict(text: str):
+def get_course_requirements_dict(text: str) -> dict:
     """Returns a parsed dictionary from the course requirements string."""
     
     # Output    
@@ -159,18 +174,17 @@ def Course(course, **kwargs):
     # If debug, print starting message
     if kwargs.get("debug"):
         print("    - Starting: " + course)
+        
+    # History
+    if kwargs.get("history"):
+        return API.search_history(course)
     
     # Create course url lookup from "course"
     course_url = get_course_url(course)
     
     # Get html response
     response = get_html_response(course_url)
-
-    # Check if course page exists
-    soup = BeautifulSoup(response.content, "html.parser")
-    if soup.select("#PrimaryContentPlaceHolder_searchControl_lblNoResult"):
-        if soup.select("#PrimaryContentPlaceHolder_searchControl_lblNoResult")[0].text == "No results found.":
-            return {'error': "Course does not exist."}
+    if not response: return {'error': "Course does not exist."}
 
     requirements_text = get_course_requirements_text(response)
     parsed_requirements = get_course_requirements_dict(requirements_text)

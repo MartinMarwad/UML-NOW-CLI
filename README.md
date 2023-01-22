@@ -35,27 +35,34 @@ The `course` command expects a **course prefix** combined with a **course number
 - `MATH.2310`
 
 ```
-$ python3 -m umlnow course COMP.1010
+$ python3 -m umlnow course COMP.1020
 ```
 
 ```
 {
-    "name": "COMP.1010 Computing I (Formerly 91.101)",
-    "url": "https://www.uml.edu/catalog/courses/COMP/1010/",
-    "id": "008055",
-    "description": "Introduction to computing environments: introduction to an integrated development environment; C, C++, or a similar language.  Linear data structures; arrays, records, and linked lists.  Abstract data types, stacks, and queues.  Simple sorting via exchange, selection, and insertion, basic file I/O. Programming style documentation and testing.  Ethical and social issues.  Effective Fall 2013, Co-req 91.103 Computing 1 Lab.",
+    "name": "COMP.1020 Computing II (Formerly 91.102)",
+    "url": "https://www.uml.edu/catalog/courses/COMP/1020/",
+    "id": "008056",
+    "description": "Computing II focuses on the implementation and applications of data structures, including arrays, linked lists, stacks, queues, trees, binary trees, binary search trees, heaps, graphs, and hash tables. Recursive approaches are used. Performance analysis is discussed. Attention is paid to programming style, documentation, and testing. This course includes extensive laboratory work. Effective Fall 2013, Co-req: Computing 2 Lab.",
     "credits": {
         "min": "3",
         "max": "3"
     },
-    "requirements-text": "Co-req: COMP.1030L Comp. 1 Lab.",
+    "requirements-text": "COMP.1010 Computing I with a B- or better, and COMP.1030L Computing I Lab, and Co-req: COMP.1040L Computing II Lab.",
     "requirements": {
-        "pre-reqs": [],
-        "pre-reqs-all-required": true,
-        "co-reqs": [
-            "COMP.1030L"
+        "prerequisites": [
+            [
+                "COMP.1010"
+            ],
+            [
+                "COMP.1030L"
+            ]
         ],
-        "co-reqs-all-required": true
+        "corequisites": [
+            [
+                "COMP.1040L"
+            ]
+        ]
     }
 }
 ```
@@ -69,16 +76,33 @@ $ python3 -m umlnow course COMP.1010 --requirements
 ```
 {
     "requirements": {
-        "pre-reqs": [],
-        "pre-reqs-all-required": true,
-        "co-reqs": [
-            "COMP.1030L"
+        "prerequisites": [
+            [
+                "COMP.1010"
+            ],
+            [
+                "COMP.1030L"
+            ]
         ],
-        "co-reqs-all-required": true
+        "corequisites": [
+            [
+                "COMP.1040L"
+            ]
+        ]
     }
-}
+
 ```
 
+The parser will automatically try to extract the requirements string into structured class requirements. Both `prerequisites` and `corequisites` are lists of requirements. Each requirement is a list too. If there are multiple optional requirements, then there will be a list of optional classes in each requirement. Otherwise, there will just be one class in each requirement.
+
+
+#### Course: History
+
+The `--history` flag uses the `api` command under the hood to get a history of when the course was taught. This history goes back to Fall 2015.
+
+```
+python3 -m umlnow course COMP.5450 --history
+```
 
 
 ### Search
@@ -94,11 +118,9 @@ Sub commands:
   - minors
 - pathways
 
-
 #### Search: Courses
 
 Provides the ability to query for all courses offered by UML.
-
 
 To see all courses offered by UML:
 
@@ -106,13 +128,11 @@ To see all courses offered by UML:
 $ python3 -m umlnow search courses
 ```
 
-
 To see all courses offered by a department prefix
 
 ```bash
 $ python3 -m umlnow search courses --departments=COMP
 ```
-
 
 ##### Using the `--parse` flag
 
@@ -122,13 +142,11 @@ The data provided is only the course prefix, name, and id. If you want to get al
 
 **However, this requests a new webpage from the UML website for every course found. Using this flag on a large queryset (like all the courses) will take a long time to run and could break the terms of the UML website. Use this flag at your own risk.**
 
-
 #### Search: Professors
 
 ***Not Implmented***
 
 Provides the ability to query for all professors teaching courses at UML.
-
 
 #### Search: Programs
 
@@ -136,20 +154,17 @@ Provides the ability to query for all professors teaching courses at UML.
 
 Provides the ability to query for all programs offered at UML.
 
-
 #### Search: Pathways
 
 ***Not Implmented***
 
 Provides the ability to query for degree-pathways offered by UML.
 
-
 ### API
 
 ***Needs Documentation***
 
 If you want to access the UML APIs directly, use the following commands. This is useful for testing or exploring what the APIs can provide.
-
 
 #### API: Search
 
@@ -163,8 +178,6 @@ $ python3 -m umlnow api search --term=3210 --subjects=COMP
 $ python3 -m umlnow api search --term=3210 --subjects=COMP --courseTitle=computing
 ```
 
-
-
 #### API: Catalog
 
 Query the UML Catalog API directly.
@@ -172,8 +185,6 @@ Query the UML Catalog API directly.
 ```
 $ python3 -m umlnow api catalog --pathCollege=SCI --pathDepartment=LCOMPSCI --pathType=undergraduate --SearchType=path
 ```
-
-
 
 ## Library
 
