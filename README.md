@@ -1,3 +1,9 @@
+# This repository has been moved here: https://github.com/UMLCloudComputing/UML-NOW-CLI 
+
+---
+---
+---
+
 # UML-NOW-CLI
 
 A Command Line Interface for the University of Massachusetts Lowell's NOW Student Dashboard API.
